@@ -48,3 +48,9 @@ if user data exist then login success
 ## Milestone 8:
 
 In this milestone created the product page with the static data and using the tailwindcss
+
+## Milestone 9 :
+In this milestone, we implemented a Create Product page where users can input product details, including name, description, category, tags, price, stock, email, and images. We used a dropdown for category selection and allowed multiple image uploads with previews. Additionally, we created a new route for this page and integrated it into the app by updating routes.jsx and App.jsx. This milestone enhances product management by enabling users to add new products seamlessly.
+
+## Milestone 10 :
+In Milestone 10, we create the backend endpoint for the "Create Product" page. This involves setting up a product schema, handling form submissions in the frontend, and validating product data before storing it in the database. We configure Multer for image uploads, ensure user verification via email, and integrate the route into Express.js. Finally, we update App.js to connect the new API endpoint.
