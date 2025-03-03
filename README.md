@@ -54,3 +54,21 @@ In this milestone, we implemented a Create Product page where users can input pr
 
 ## Milestone 10 :
 In Milestone 10, we create the backend endpoint for the "Create Product" page. This involves setting up a product schema, handling form submissions in the frontend, and validating product data before storing it in the database. We configure Multer for image uploads, ensure user verification via email, and integrate the route into Express.js. Finally, we update App.js to connect the new API endpoint.
+
+
+
+
+
+## Milestone 13: Edit Product Feature  
+
+### What was done?  
+- Added an **Edit** button for products.  
+- Made a form that **auto-fills with existing details**.  
+- Created a backend **update API** for MongoDB.  
+- Updated products in the database and UI.  
+
+### How it works?  
+1. Click **Edit** on a product.  
+2. Update the details in the form.  
+3. Click **Save** to up
+
