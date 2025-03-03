@@ -1,31 +1,58 @@
-const express = require("express");
-const app = express();
-const ErrorHandler = require("./middleware/error");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const cors=require('cors')
+import React, { useState, useEffect } from "react";
+import ProductCard from "./ProductCard";
+import ProductForm from "./ProductForm";
 
+const ProductList = () => {
+  const [products, setProducts] = useState([]);
+  const [editingProduct, setEditingProduct] = useState(null);
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}))
-app.use(cookieParser());
-app.use("/",express.static("uploads"));
-app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use(cors())
-// config
-if (process.env.NODE_ENV !== "PRODUCTION") {
-    require("dotenv").config({
-      path: "backend/config/.env",
-    });
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    const res = await fetch("http://localhost:5000/api/products");
+    const data = await res.json();
+    setProducts(data);
+  };
+
+  // ✅ Function to handle product editing
+  const handleEditClick = (product) => {
+    setEditingProduct(product);
+  };
+
+  // ✅ Function to update product details
+  const handleSave = async (updatedData) => {
+    if (!editingProduct) return;
+
+    const res = await fetch(
+      `http://localhost:5000/api/products/${editingProduct._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      }
+    );
+
+    if (res.ok) {
+      fetchProducts(); // Refresh product list
+      setEditingProduct(null); // Close form after saving
+    }
+  };
+
+  return (
+    <div>
+      <h1>Product List</h1>
+
+      {editingProduct ? (
+        <ProductForm selectedProduct={editingProduct} onSave={handleSave} />
+      ) : (
+        products.map((product) => (
+          <ProductCard key={product._id} product={product} onEdit={handleEditClick} />
+        ))
+      )}
+    </div>
+  );
 };
-//import Routes
-const user = require("./controller/user");
-const product = require("./controller/product");
 
-app.use("/api/v2/user", user);
-app.use("/api/v2/product", product);
-
-// it's for ErrorHandling
-app.use(ErrorHandler);
-
-module.exports = app;
+export default ProductList;
